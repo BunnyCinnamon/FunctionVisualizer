@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cinnamon.Window">
+   <children>
+      <AnchorPane layoutX="100.0" layoutY="6.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <SplitPane dividerPositions="0.374" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+                     <children>
+                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="96.0" prefWidth="282.0" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Button layoutX="138.0" layoutY="1.0" mnemonicParsing="false" onAction="#insert" prefHeight="27.0" prefWidth="68.0" text="Insert">
+                                 <font>
+                                    <Font name="Consolas" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="paste" layoutX="158.0" layoutY="74.0" mnemonicParsing="false" onAction="#paste" text="Paste" />
+                              <Button fx:id="add" layoutY="74.0" mnemonicParsing="false" onAction="#add" text="Add" />
+                              <Button fx:id="remove" disable="true" layoutX="43.0" layoutY="74.0" mnemonicParsing="false" onAction="#remove" text="Remove" />
+                              <Button fx:id="clear" layoutX="108.0" layoutY="74.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
+                              <Spinner fx:id="spinnerMin" accessibleHelp="Max" accessibleRoleDescription="Max" accessibleText="Max" amountToStepBy="1" editable="true" initialValue="0" layoutY="38.0" prefHeight="25.0" prefWidth="59.0">
+                                  <valueFactory>
+                                      <SpinnerValueFactory.IntegerSpinnerValueFactory max="2147483647" min="0" />
+                                  </valueFactory>
+                              </Spinner>
+                              <TextField fx:id="name" layoutY="2.0" prefHeight="25.0" prefWidth="130.0" promptText="Placeholder" />
+                              <Button layoutX="138.0" layoutY="37.0" mnemonicParsing="false" onAction="#reset" prefHeight="27.0" prefWidth="68.0" text="Reset">
+                                 <font>
+                                    <Font name="Consolas" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutY="26.0" text="Min:">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font></Label>
+                              <Spinner fx:id="spinnerMax" accessibleHelp="Max" accessibleRoleDescription="Max" accessibleText="Max" amountToStepBy="1" editable="true" initialValue="0" layoutX="71.0" layoutY="37.0" prefHeight="25.0" prefWidth="59.0">
+                                 <valueFactory>
+                                    <SpinnerValueFactory.IntegerSpinnerValueFactory max="2147483647" min="0" />
+                                 </valueFactory>
+                              </Spinner>
+                              <Label layoutX="71.0" layoutY="25.0" text="Max:">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                           </children></Pane>
+                        <ListView fx:id="listView" editable="true" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <AreaChart fx:id="areaChart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <xAxis>
+                            <NumberAxis side="BOTTOM" fx:id="xAxis"/>
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" fx:id="yAxis"/>
+                          </yAxis>
+                        </AreaChart>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></AnchorPane>
+              </items>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </SplitPane>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
