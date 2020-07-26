@@ -25,27 +25,37 @@
                               <Button fx:id="add" layoutY="74.0" mnemonicParsing="false" onAction="#add" text="Add" />
                               <Button fx:id="remove" disable="true" layoutX="43.0" layoutY="74.0" mnemonicParsing="false" onAction="#remove" text="Remove" />
                               <Button fx:id="clear" layoutX="108.0" layoutY="74.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
-                              <Spinner fx:id="spinnerMin" accessibleHelp="Max" accessibleRoleDescription="Max" accessibleText="Max" amountToStepBy="1" editable="true" initialValue="0" layoutY="38.0" prefHeight="25.0" prefWidth="59.0">
+                              <Spinner fx:id="spinnerFrom" accessibleHelp="Max" accessibleRoleDescription="Max" accessibleText="Max" amountToStepBy="1" editable="true" initialValue="0" layoutY="38.0" prefHeight="25.0" prefWidth="59.0">
                                   <valueFactory>
                                       <SpinnerValueFactory.IntegerSpinnerValueFactory max="2147483647" min="0" />
                                   </valueFactory>
                               </Spinner>
-                              <TextField fx:id="name" layoutY="2.0" prefHeight="25.0" prefWidth="130.0" promptText="Placeholder" />
+                              <TextField fx:id="name" layoutY="2.0" prefHeight="25.0" prefWidth="59.0" promptText="Placeholder" />
                               <Button layoutX="138.0" layoutY="37.0" mnemonicParsing="false" onAction="#reset" prefHeight="27.0" prefWidth="68.0" text="Reset">
                                  <font>
                                     <Font name="Consolas" size="13.0" />
                                  </font>
                               </Button>
-                              <Label layoutY="26.0" text="Min:">
+                              <Label layoutY="26.0" text="From:">
                                  <font>
                                     <Font size="10.0" />
                                  </font></Label>
-                              <Spinner fx:id="spinnerMax" accessibleHelp="Max" accessibleRoleDescription="Max" accessibleText="Max" amountToStepBy="1" editable="true" initialValue="0" layoutX="71.0" layoutY="37.0" prefHeight="25.0" prefWidth="59.0">
+                              <Spinner fx:id="spinnerTo" accessibleHelp="Max" accessibleRoleDescription="Max" accessibleText="Max" amountToStepBy="1" editable="true" initialValue="0" layoutX="71.0" layoutY="37.0" prefHeight="25.0" prefWidth="59.0">
                                  <valueFactory>
                                     <SpinnerValueFactory.IntegerSpinnerValueFactory max="2147483647" min="0" />
                                  </valueFactory>
                               </Spinner>
-                              <Label layoutX="71.0" layoutY="25.0" text="Max:">
+                              <Label layoutX="71.0" layoutY="25.0" text="To:">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Spinner fx:id="spinnerMax" accessibleHelp="Max" accessibleRoleDescription="Max" accessibleText="Max" amountToStepBy="1" editable="true" initialValue="0" layoutX="71.0" layoutY="2.0" prefHeight="25.0" prefWidth="59.0">
+                                 <valueFactory>
+                                    <SpinnerValueFactory.IntegerSpinnerValueFactory max="2147483647" min="0" />
+                                 </valueFactory>
+                              </Spinner>
+                              <Label layoutX="71.0" layoutY="-10.0" text="Max:">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
@@ -60,10 +70,10 @@
                      <children>
                         <AreaChart fx:id="areaChart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <xAxis>
-                            <NumberAxis side="BOTTOM" fx:id="xAxis"/>
+                            <NumberAxis side="BOTTOM" fx:id="xAxis" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" fx:id="yAxis"/>
+                            <NumberAxis fx:id="yAxis" side="LEFT" />
                           </yAxis>
                         </AreaChart>
                      </children>

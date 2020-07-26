@@ -20,9 +20,11 @@ public class Window {
     @FXML
     public ListView<String> listView;
     @FXML
-    public Spinner<Integer> spinnerMax;
+    public Spinner<Integer> spinnerTo;
     @FXML
-    public Spinner<Integer> spinnerMin;
+    public Spinner<Integer> spinnerFrom;
+    @FXML
+    public Spinner<Integer> spinnerMax;
     @FXML
     public AreaChart<Integer, Double> areaChart;
     @FXML
@@ -68,17 +70,18 @@ public class Window {
     public void insert(ActionEvent event) {
         if (!name.getText().isEmpty() && !listView.getItems().isEmpty()) {
             String[] expressions = listView.getItems().toArray(new String[0]);
-            int max = spinnerMax.getValue();
-            int min = spinnerMin.getValue();
+            int max = spinnerTo.getValue();
+            int min = spinnerFrom.getValue();
+            int total = spinnerMax.getValue();
             if(max < min) return;
 
             XYChart.Series<Integer, Double> series = areaChart.getData().stream().filter(d -> d.getName().equals(name.getText())).findFirst().orElse(new AreaChart.Series<>());
             series.setName(name.getText());
             series.getData().clear();
             for (int i = min; i <= Math.min(max, min + 10000); i++) {
-                double value = ExpressionHelper.getExpression(expressions, i, max);
+                double value = ExpressionHelper.getExpression(expressions, i, total);
                 AreaChart.Data<Integer, Double> data = new AreaChart.Data<>(i, value);
-                data.setNode(new HoveredThresholdNode(value));
+                data.setNode(new HoveredThresholdNode(i, value));
                 series.getData().add(data);
             }
             if (!areaChart.getData().contains(series)) {
@@ -90,11 +93,11 @@ public class Window {
             if (xAxis.getUpperBound() < Math.min(max, min + 10000)) {
                 xAxis.setUpperBound(Math.min(max, min + 10000));
             }
-            if (yAxis.getLowerBound() == 0 || yAxis.getLowerBound() > ExpressionHelper.getExpression(expressions, min, max)) {
-                yAxis.setLowerBound(ExpressionHelper.getExpression(expressions, min, max));
+            if (yAxis.getLowerBound() == 0 || yAxis.getLowerBound() > ExpressionHelper.getExpression(expressions, min, total)) {
+                yAxis.setLowerBound(ExpressionHelper.getExpression(expressions, min, total));
             }
-            if (yAxis.getUpperBound() < ExpressionHelper.getExpression(expressions, Math.min(max, min + 10000), max)) {
-                yAxis.setUpperBound(ExpressionHelper.getExpression(expressions, Math.min(max, min + 10000), max));
+            if (yAxis.getUpperBound() < ExpressionHelper.getExpression(expressions, Math.min(max, min + 10000), total)) {
+                yAxis.setUpperBound(ExpressionHelper.getExpression(expressions, Math.min(max, min + 10000), total));
             }
             remove.setDisable(true);
             row = -1;
@@ -143,9 +146,9 @@ public class Window {
     }
 
     static class HoveredThresholdNode extends StackPane {
-        HoveredThresholdNode(double value) {
+        HoveredThresholdNode(int i, double value) {
             setPrefSize(5, 5);
-            Label label = createDataThresholdLabel(value);
+            Label label = createDataThresholdLabel(i, value);
             setOnMouseEntered(mouseEvent -> {
                 getChildren().setAll(label);
                 setCursor(Cursor.NONE);
@@ -157,8 +160,8 @@ public class Window {
             });
         }
 
-        private Label createDataThresholdLabel(double value) {
-            final Label label = new Label(value + "");
+        private Label createDataThresholdLabel(int i, double value) {
+            final Label label = new Label(i + " -> " + value);
             label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
             label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
             return label;

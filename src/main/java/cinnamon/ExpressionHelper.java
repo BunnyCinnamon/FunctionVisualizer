@@ -62,11 +62,14 @@ public class ExpressionHelper {
             } else if (condition.startsWith("-")) {
                 int min = Integer.parseInt(condition.substring(1));
                 return new FunctionInfo(FunctionInfo.Condition.MinusInfinite, function, min);
-            } else {
+            } else if (condition.contains("-")){
                 int index = condition.indexOf('-');
                 int min = Integer.parseInt(condition.substring(0, index));
                 int max = Integer.parseInt(condition.substring(index + 1));
                 return new FunctionInfo(FunctionInfo.Condition.Between, function, min, max);
+            } else {
+                int min = Integer.parseInt(condition);
+                return new FunctionInfo(FunctionInfo.Condition.Equal, function, min);
             }
         } else {
             throw new IllegalStateException("[ExpressionHelper] - Expression " + string + " is not valid, might be missing a { or }");
@@ -115,6 +118,12 @@ public class ExpressionHelper {
                 @Override
                 boolean test(int level, int levelMin, int levelMax) {
                     return level >= levelMin && level <= levelMax;
+                }
+            },
+            Equal {
+                @Override
+                boolean test(int level, int levelMin, int levelMax) {
+                    return level == levelMin;
                 }
             };
 
