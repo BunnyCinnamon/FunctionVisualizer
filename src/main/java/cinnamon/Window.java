@@ -40,13 +40,9 @@ public class Window {
             row = listView.getSelectionModel().getSelectedIndex();
             remove.setDisable(false);
         });
-        xAxis.setAutoRanging(false);
-        xAxis.setLowerBound(0);
-        xAxis.setUpperBound(0);
         xAxis.setLabel("Level");
-        yAxis.setAutoRanging(false);
-        yAxis.setLowerBound(0);
-        yAxis.setUpperBound(0);
+        xAxis.setForceZeroInRange(false);
+        yAxis.setForceZeroInRange(false);
     }
 
     @FXML
@@ -87,26 +83,33 @@ public class Window {
             if (!areaChart.getData().contains(series)) {
                 areaChart.getData().add(series);
             }
-            if (xAxis.getLowerBound() == 0 || xAxis.getLowerBound() > min) {
-                xAxis.setLowerBound(min);
-            }
-            if (xAxis.getUpperBound() < Math.min(max, min + 10000)) {
-                xAxis.setUpperBound(Math.min(max, min + 10000));
-            }
-            if (yAxis.getLowerBound() == 0 || yAxis.getLowerBound() > ExpressionHelper.getExpression(expressions, min, total)) {
-                yAxis.setLowerBound(ExpressionHelper.getExpression(expressions, min, total));
-            }
-            if (yAxis.getUpperBound() < ExpressionHelper.getExpression(expressions, Math.min(max, min + 10000), total)) {
-                yAxis.setUpperBound(ExpressionHelper.getExpression(expressions, Math.min(max, min + 10000), total));
-            }
             remove.setDisable(true);
             row = -1;
+
+            int maxX = Integer.MIN_VALUE;
+            double maxY = Double.NEGATIVE_INFINITY;
+            int minX = Integer.MAX_VALUE;
+            double minY = Double.POSITIVE_INFINITY;
+            for (XYChart.Series<Integer, Double> datum : areaChart.getData()) {
+                for (XYChart.Data<Integer, Double> datumDatum : datum.getData()) {
+                    if(datumDatum.getXValue() > maxX) maxX = datumDatum.getXValue();
+                    if(datumDatum.getYValue() > maxY) maxY = datumDatum.getYValue();
+                    if(datumDatum.getXValue() < minX) minX = datumDatum.getXValue();
+                    if(datumDatum.getYValue() < minY) minY = datumDatum.getYValue();
+                }
+            }
+            if(xAxis.getUpperBound() > maxX) xAxis.setUpperBound(maxX);
+            if(yAxis.getUpperBound() > maxY) yAxis.setUpperBound(maxY);
+            if(xAxis.getLowerBound() < minX) xAxis.setLowerBound(minX);
+            if(yAxis.getLowerBound() < minY) yAxis.setLowerBound(minY);
         }
     }
 
     @FXML
     public void reset(ActionEvent event) {
         areaChart.getData().clear();
+        ExpressionHelper.EXPRESSION_CACHE.clear();
+        ExpressionHelper.EXPRESSION_FUNCTION_CACHE.clear();
         xAxis.setLowerBound(0);
         xAxis.setUpperBound(0);
         yAxis.setLowerBound(0);
