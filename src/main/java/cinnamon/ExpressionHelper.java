@@ -4,7 +4,9 @@ import com.expression.parser.Parser;
 import com.expression.parser.util.ParserResult;
 import com.expression.parser.util.Point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -18,6 +20,23 @@ public class ExpressionHelper {
 
     public static final Function<String, FunctionInfo> EXPRESSION_PARSER_SUPPLIER = ExpressionHelper::parse;
     public static final String EXPRESSION_REGEX = "^\\(([\\+\\-\\d]+)\\)\\{(.+)\\}$";
+
+    public static double getExpression(String function, int min, int max, int level) {
+        Map<Integer, Double> map = ExpressionHelper.EXPRESSION_CACHE.computeIfAbsent(function, ExpressionHelper.EXPRESSION_CACHE_SUPPLIER);
+        if (min > max) min = max;
+        if (!map.containsKey(level)) {
+            List<Point> points = new ArrayList<>();
+            if (function.contains("x"))
+                points.add(new Point("x", String.valueOf(min)));
+            if (function.contains("y"))
+                points.add(new Point("y", String.valueOf(max)));
+            if (function.contains("l"))
+                points.add(new Point("l", String.valueOf(level)));
+            ParserResult result = Parser.eval(function, points.toArray(new Point[]{}));
+            map.put(level, result.getValue().doubleValue());
+        }
+        return map.get(level);
+    }
 
     public static double getExpression(String function, int min, int max) {
         Map<Integer, Double> map = ExpressionHelper.EXPRESSION_CACHE.computeIfAbsent(function, ExpressionHelper.EXPRESSION_CACHE_SUPPLIER);

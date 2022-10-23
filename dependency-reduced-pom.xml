@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cinnamon</groupId>
   <artifactId>functionVisualizer</artifactId>
-  <version>3.0</version>
+  <version>4.0</version>
   <build>
     <plugins>
       <plugin>
@@ -46,6 +46,10 @@
     <repository>
       <id>com.expression.parser</id>
       <url>file://${project.basedir}/lib</url>
+    </repository>
+    <repository>
+      <id>Enonic</id>
+      <url>https://repo.enonic.com/public/</url>
     </repository>
   </repositories>
   <properties>

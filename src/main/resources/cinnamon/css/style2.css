@@ -1,0 +1,12 @@
+.chart-line-symbol {
+    -fx-background-color: #f9d900, firebrick;
+    -fx-background-radius: 0px;
+    -fx-background-radius: 10px ;
+    -fx-padding: 10px ;
+}
+.chart-symbol {
+    -fx-background-color: #f9d900, firebrick;
+    -fx-background-radius: 0px;
+    -fx-background-radius: 10px ;
+    -fx-padding: 10px ;
+}
