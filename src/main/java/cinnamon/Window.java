@@ -105,7 +105,9 @@ public class Window {
                 x.setLowerBound(min - 1);
                 x.setUpperBound(max + 1);
                 y.setAutoRanging(true);
-                if (name.contains("DURATION") || name.contains("COOL") || name.contains("TIME") || name.contains("STUN") || name.contains("DELAY")) {
+                if (name.equals("DAMAGE_MIRROR")) {
+                    y.setLabel("Percentage (%)");
+                } else if (name.contains("DURATION") || name.contains("COOL") || name.contains("TIME") || name.contains("STUN") || name.contains("DELAY")) {
                     y.setLabel("Seconds (s)");
                 } else if (name.contains("DAMAGE") || name.contains("DOT") || name.contains("HEALTH")) {
                     y.setLabel("Full Hearts (h)");

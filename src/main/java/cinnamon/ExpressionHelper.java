@@ -26,12 +26,9 @@ public class ExpressionHelper {
         if (min > max) min = max;
         if (!map.containsKey(level)) {
             List<Point> points = new ArrayList<>();
-            if (function.contains("x"))
-                points.add(new Point("x", String.valueOf(min)));
-            if (function.contains("y"))
-                points.add(new Point("y", String.valueOf(max)));
-            if (function.contains("l"))
-                points.add(new Point("l", String.valueOf(level)));
+            points.add(new Point("x", String.valueOf(min)));
+            points.add(new Point("y", String.valueOf(max)));
+            points.add(new Point("l", String.valueOf(level)));
             ParserResult result = Parser.eval(function, points.toArray(new Point[]{}));
             map.put(level, result.getValue().doubleValue());
         }
@@ -81,7 +78,7 @@ public class ExpressionHelper {
             } else if (condition.startsWith("-")) {
                 int min = Integer.parseInt(condition.substring(1));
                 return new FunctionInfo(FunctionInfo.Condition.MinusInfinite, function, min);
-            } else if (condition.contains("-")){
+            } else if (condition.contains("-")) {
                 int index = condition.indexOf('-');
                 int min = Integer.parseInt(condition.substring(0, index));
                 int max = Integer.parseInt(condition.substring(index + 1));
